@@ -1,8 +1,18 @@
 <?php
+
+require_once 'Connection.php';
+$connection = new Connection();
+
+$notes = $connection->getNotes();
+
+//echo "<pre>";
+//var_dump($notes);
+//echo "</pre>";
+
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,23 +23,26 @@
 <body>
 <div>
     <form class="new-note" action="create.php" method="post">
-        <input type="text" name="title" placeholder="Note title" autocomplete="off">
+        <input type="text" name="title" placeholder="Not Başlığı" autocomplete="off">
         <textarea name="description" cols="30" rows="4"
-                  placeholder="Note Description"></textarea>
+                  placeholder="Not Açıklama"></textarea>
         <button>New note</button>
     </form>
     <div class="notes">
+        <?php foreach ($notes as $note): ?>
         <div class="note">
             <div class="title">
-                <a href="">Sample note</a>
+                <a href=""><?php echo $note['title'] ?></a>
             </div>
             <div class="description">
-                Sample note description
+                <?php echo $note['description'] ?>
             </div>
-            <small>15/02/20 19:00:00</small>
+            <small><?php echo $note['create_date'] ?></small>
             <button class="close">X</button>
         </div>
+        <?php endforeach; ?>
     </div>
+
 </div>
 </body>
 </html>
